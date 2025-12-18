@@ -1,0 +1,46 @@
+services:
+  api:
+    build: .
+    container_name: blog-api
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      DB_URL: mongodb://mongodb:27017/blog_api
+      NODE_ENV: development
+      CHOKIDAR_USEPOLLING: "true"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+    # ✅ mount โค้ดเข้า container เพื่อให้มันเห็นไฟล์เปลี่ยน
+    volumes:
+      - .:/app
+      # ✅ กัน node_modules ของเครื่องทับของ container
+      - bun_node_modules:/app/node_modules
+
+    # ✅ hot reload (เลือกอย่างใดอย่างหนึ่ง)
+    command: bun --hot index.ts
+    # หรือถ้า --hot งอแงบน Mac ให้ใช้:
+    # command: bun --watch src/index.ts
+
+  mongodb:
+    image: mongo:7
+    container_name: blog-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: blog_api
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "mongodb://localhost:27017/blog_api", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongo_data:
+  bun_node_modules:
