@@ -10,9 +10,10 @@ import {
   deleteById,
 } from "../controllers/post.controller";
 import { verifyToken } from "../middleware/authJwt.middleware";
+import { upload, uploadToFirebase} from "../middleware/file.middleware"
 
 // POST http://localhost:3000/api/v1/post
-router.post("/", verifyToken, createPost);
+router.post("/", verifyToken, upload, uploadToFirebase, createPost);
 router.get("/", getAllPosts);
 router.get("/:id", getById);
 router.get("/author/:id", getPostsByAuthor);

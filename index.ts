@@ -5,8 +5,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import userRoutes from './routers/user.router';
 import postRoutes from './routers/post.router'
-
-
+import multer from "multer";
 dotenv.config();
 const app = express();
 const PORT = Number(process.env.PORT)
@@ -48,3 +47,5 @@ app.listen(PORT,() =>
   console.log(`Server on ${PORT}`)
 );
 
+const sa = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT!);
+console.log(sa.private_key);

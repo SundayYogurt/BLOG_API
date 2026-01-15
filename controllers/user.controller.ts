@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import type { Request, Response } from "express";
 
 // typescirpt บังคับเช็ค
-const JWT_SECRET = process.env.SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
   throw new Error("SECRET is not defined in .env");
 }
@@ -65,7 +65,7 @@ export const login = async (req: Request<{}, {}, AuthBody>, res: Response) => {
     const token = jwt.sign(
       { username: userDoc.username, id: userDoc._id.toString() },
       JWT_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: '7d' }
     );
 
     return res.json({
