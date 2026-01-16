@@ -40,5 +40,11 @@ if(!DB_URL){
     }
     )
 }
+/* ... routes ... */
 
-export default app;
+app.listen(PORT,() =>
+  console.log(`Server on ${PORT}`)
+);
+
+const sa = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT!);
+console.log(sa.private_key);
