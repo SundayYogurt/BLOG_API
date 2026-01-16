@@ -17,6 +17,6 @@ router.post("/", verifyToken, upload, uploadToFirebase, createPost);
 router.get("/", getAllPosts);
 router.get("/:id", getById);
 router.get("/author/:id", getPostsByAuthor);
-router.put("/:id", verifyToken, updatePost);
+router.put("/:id", verifyToken, upload, uploadToFirebase, updatePost);
 router.delete("/:id", verifyToken, deleteById);
 export default router;
