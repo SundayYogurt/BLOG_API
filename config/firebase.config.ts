@@ -14,5 +14,3 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
 
-const sa = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT!);
-console.log(sa.private_key);

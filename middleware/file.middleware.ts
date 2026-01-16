@@ -4,16 +4,15 @@ import { bucket } from "../config/firebase.admin";
 import "dotenv/config";
 // multer memory upload (field: cover)
 
-const sa = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT!);
-console.log(sa.private_key);
+
 
 export const upload = multer({
-  storage: multer.memoryStorage(),
+  storage: multer.memoryStorage(), // เก็บลงใน ram หายทันทีเมื่อ req ส่ง
   limits: { fileSize: 1_000_000 }, // 1MB
   fileFilter: (req, file, cb) => {
     checkFileType(file, cb);
   },
-}).single("cover");
+}).single("cover"); // ส่งไฟล์เดียวชื่อ cover
 
 function checkFileType(
   file: Express.Multer.File,

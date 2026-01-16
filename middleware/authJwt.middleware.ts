@@ -25,7 +25,7 @@ export const verifyToken = (req: AuthedRequest, res: Response, next: NextFunctio
   }
 
   try {
-    const decoded = jwt.verify(token, secret) as MyJwtPayload;
+    const decoded = jwt.verify(token, secret) as MyJwtPayload; //  check ว่า token ออกโดย server เราไหม
 
     req.user = {
       authorId: decoded.id,   
