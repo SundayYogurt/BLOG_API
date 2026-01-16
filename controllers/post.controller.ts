@@ -193,19 +193,27 @@ export const updatePost = async (
       return res.status(400).json({ message: "Invalid post id" });
     }
 
-    if (
-      title === undefined &&
-      summary === undefined &&
-      content === undefined
-    ) {
+    const updateData: {
+      title?: string;
+      summary?: string;
+      content?: string;
+      cover?: string;
+    } = {};
+
+    if (title) updateData.title = title;
+    if (summary) updateData.summary = summary;
+    if (content) updateData.content = content;
+    if (req.coverUrl) updateData.cover = req.coverUrl;
+
+    if (Object.keys(updateData).length === 0) {
       return res
         .status(400)
-        .json({ message: "At least one field is required" });
+        .json({ message: "At least one field to update is required" });
     }
 
     const updatedPost = await PostModel.findOneAndUpdate(
       { _id: id, author: authorId },
-      { title, summary, content },
+      { $set: updateData }, // Use $set to update only provided fields
       { new: true, runValidators: true }
     );
 

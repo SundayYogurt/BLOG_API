@@ -1,4 +1,3 @@
-
 import express, { Router } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -41,11 +40,5 @@ if(!DB_URL){
     }
     )
 }
-/* ... routes ... */
 
-app.listen(PORT,() =>
-  console.log(`Server on ${PORT}`)
-);
-
-const sa = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT!);
-console.log(sa.private_key);
+export default app;
